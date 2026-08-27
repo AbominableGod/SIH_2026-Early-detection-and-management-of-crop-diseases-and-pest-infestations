@@ -1,0 +1,12 @@
+{
+  "Bacterial spot": {"treatment": "Remove affected leaves and apply a labeled copper-based bactericide.", "organic": "Neem oil spray 5ml/L weekly"},
+  "Early blight": {"treatment": "Remove infected leaves and apply a labeled fungicide such as mancozeb.", "organic": "Baking soda spray + crop rotation"},
+  "Healthy": {"treatment": "The plant appears healthy. Continue regular watering, nutrition, and monitor.", "organic": "Use compost and drip irrigation"},
+  "Late blight": {"treatment": "Remove severely affected plants and apply a labeled fungicide promptly.", "organic": "Copper spray + remove affected plants"},
+  "Leaf Mold": {"treatment": "Improve ventilation and apply a labeled fungicide if symptoms continue.", "organic": "Milk spray 1:10 with water"},
+  "Septoria leaf spot": {"treatment": "Remove infected lower leaves and apply a labeled fungicide.", "organic": "Remove lower leaves + neem oil"},
+  "Spider mites": {"treatment": "Use an approved miticide and isolate heavily infested plants.", "organic": "Spray water + soap solution"},
+  "Target Spot": {"treatment": "Remove affected foliage and apply a labeled fungicide.", "organic": "Sulfur spray + proper spacing"},
+  "Yellow Leaf Curl Virus": {"treatment": "Remove severely infected plants and control whiteflies with a labeled insecticide.", "organic": "Yellow sticky traps + remove infected plants"},
+  "Mosaic virus": {"treatment": "There is no cure; remove and destroy infected plants and disinfect tools.", "organic": "Control aphids. Use virus-free seeds"}
+}

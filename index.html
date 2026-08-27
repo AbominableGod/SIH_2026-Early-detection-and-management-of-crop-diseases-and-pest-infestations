@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Doctor AI | Tomato Health Check</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        :root { --ink:#17352b; --muted:#63756c; --leaf:#1f7a52; --mint:#dff1e5; --cream:#f7f5ed; --paper:#fffdf8; --line:#d9e4da; --coral:#c6543d; }
+        * { box-sizing:border-box; }
+        body { margin:0; min-height:100vh; color:var(--ink); background:var(--cream); font-family:'DM Sans',sans-serif; }
+        body:before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.28; background-image:radial-gradient(#b7cdbb 1px, transparent 1px); background-size:24px 24px; }
+        .shell { position:relative; max-width:1080px; margin:auto; padding:28px 24px 48px; }
+        header { display:flex; align-items:center; justify-content:space-between; margin-bottom:54px; }
+        .brand { display:flex; align-items:center; gap:11px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; }
+        .brand-mark { display:grid; place-items:center; width:38px; height:38px; border-radius:12px; color:white; background:var(--leaf); font-size:21px; }
+        .lang { border:1px solid var(--line); border-radius:8px; padding:9px 13px; color:var(--ink); background:var(--paper); font:600 13px 'DM Sans',sans-serif; cursor:pointer; }
+        .lang:hover { border-color:var(--leaf); }
+        main { display:grid; grid-template-columns:1fr 1.15fr; gap:58px; align-items:start; }
+        .intro { padding-top:20px; animation:rise .5s ease both; }
+        .eyebrow { margin:0 0 15px; color:var(--leaf); font-size:12px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; }
+        h1 { max-width:510px; margin:0; font:700 clamp(40px,6vw,70px)/.98 'Space Grotesk',sans-serif; letter-spacing:-1px; }
+        .intro-copy { max-width:430px; margin:22px 0 0; color:var(--muted); font-size:17px; line-height:1.6; }
+        .note { display:flex; gap:10px; align-items:center; margin-top:35px; color:var(--muted); font-size:13px; }
+        .note strong { color:var(--ink); }
+        .dot { width:8px; height:8px; border-radius:50%; background:#e29a45; }
+        .panel { padding:24px; border:1px solid var(--line); border-radius:18px; background:rgba(255,253,248,.88); box-shadow:0 18px 55px rgba(34,71,51,.1); animation:rise .6s .08s ease both; }
+        .panel-title { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+        .panel-title h2 { margin:0; font:600 20px 'Space Grotesk',sans-serif; }
+        .step { color:var(--muted); font-size:12px; }
+        .upload-box { display:block; min-height:240px; padding:24px; border:1.5px dashed #9dbca4; border-radius:13px; background:var(--mint); text-align:center; cursor:pointer; transition:.2s; }
+        .upload-box:hover, .upload-box:focus-within { border-color:var(--leaf); background:#d5ebdc; }
+        .upload-icon { display:grid; place-items:center; width:52px; height:52px; margin:27px auto 15px; border-radius:16px; color:white; background:var(--leaf); font-size:25px; }
+        .upload-box strong { display:block; font-size:16px; }
+        .upload-box small { display:block; margin-top:7px; color:var(--muted); }
+        input[type=file] { position:absolute; width:1px; height:1px; opacity:0; }
+        #imagePreview { display:none; width:100%; max-height:245px; object-fit:cover; margin-top:14px; border-radius:11px; }
+        .file-name { display:none; margin:12px 0 0; color:var(--leaf); font-size:13px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .btn { width:100%; margin-top:16px; padding:15px 18px; border:0; border-radius:9px; color:white; background:var(--ink); font:700 15px 'DM Sans',sans-serif; cursor:pointer; transition:.2s; }
+        .btn:hover { background:var(--leaf); transform:translateY(-1px); }
+        .btn:disabled { opacity:.65; cursor:wait; transform:none; }
+        #result { display:none; margin-top:18px; padding:20px; border-radius:12px; border-left:4px solid var(--leaf); background:#edf7ef; animation:rise .35s ease both; }
+        #result.disease { border-color:var(--coral); background:#fff0eb; }
+        .result-label { margin:0 0 8px; color:var(--muted); font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+        .result-name { margin:0 0 14px; font:600 24px 'Space Grotesk',sans-serif; }
+        .result-row { margin:10px 0 0; color:#3c5549; font-size:14px; line-height:1.5; }
+        .result-row b { color:var(--ink); }
+        .confidence { float:right; color:var(--leaf); font-size:13px; font-weight:700; }
+        .error { color:var(--coral); }
+        @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+        @media (max-width:760px) { .shell { padding:20px 16px 34px; } header { margin-bottom:30px; } main { grid-template-columns:1fr; gap:28px; } .intro { padding-top:0; } h1 { font-size:46px; } .intro-copy { font-size:15px; } .note { margin-top:22px; } }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <header>
+            <div class="brand"><span class="brand-mark">+</span><span>Crop Doctor AI</span></div>
+            <button class="lang" type="button" onclick="toggleLang()">Hindi / English</button>
+        </header>
+        <main>
+            <section class="intro">
+                <p class="eyebrow">Tomato health check</p>
+                <h1>See what your leaf is telling you.</h1>
+                <p class="intro-copy">Upload a clear photo of a tomato leaf. The model will screen it for common diseases and return practical next steps.</p>
+                <div class="note"><span class="dot"></span><span><strong>Private by design.</strong> Images are analyzed for this check only.</span></div>
+            </section>
+            <section class="panel">
+                <div class="panel-title"><h2>Start a diagnosis</h2><span class="step">01 / Upload</span></div>
+                <form id="uploadForm">
+                    <label for="fileInput" class="upload-box">
+                        <span class="upload-icon">↑</span>
+                        <strong id="uploadTitle">Choose a leaf photo</strong>
+                        <small id="uploadHint">JPG or PNG · clear, well-lit images work best</small>
+                    </label>
+                    <input type="file" id="fileInput" name="file" accept="image/jpeg,image/png,image/webp" required>
+                    <p class="file-name" id="fileName"></p>
+                    <img id="imagePreview" alt="Selected tomato leaf preview">
+                    <button type="submit" class="btn" id="submitButton">Analyze leaf</button>
+                </form>
+                <div id="result" aria-live="polite"></div>
+            </section>
+        </main>
+    </div>
+    <script>
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileInput');
+        const resultDiv = document.getElementById('result');
+        const submitButton = document.getElementById('submitButton');
+        const fileName = document.getElementById('fileName');
+        const preview = document.getElementById('imagePreview');
+        let lang = 'en';
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+            fileName.textContent = file.name;
+            fileName.style.display = 'block';
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+            resultDiv.style.display = 'none';
+        });
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const file = fileInput.files[0];
+            if (!file) return;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Analyzing...';
+            resultDiv.className = '';
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p class="result-row">Reading the leaf image...</p>';
+            try {
+                const response = await fetch('/predict', { method: 'POST', body: new FormData(form) });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.detail || 'The server could not analyze this image.');
+                const healthy = data.predicted_disease === 'Healthy';
+                resultDiv.className = healthy ? '' : 'disease';
+                resultDiv.innerHTML = `<p class="result-label">Screening result <span class="confidence">${data.confidence}</span></p><h3 class="result-name">${data.predicted_disease}</h3><p class="result-row"><b>Treatment:</b> ${data.treatment}</p><p class="result-row"><b>Organic option:</b> ${data.organic_solution}</p>`;
+            } catch (error) {
+                resultDiv.className = 'disease';
+                resultDiv.innerHTML = `<p class="result-row error"><b>Unable to analyze.</b> ${error.message}</p>`;
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = lang === 'hi' ? 'रोग जांचें' : 'Analyze leaf';
+            }
+        });
+
+        function toggleLang() {
+            lang = lang === 'en' ? 'hi' : 'en';
+            document.querySelector('h1').textContent = lang === 'hi' ? 'आपका पत्ता क्या कहता है?' : 'See what your leaf is telling you.';
+            document.querySelector('.intro-copy').textContent = lang === 'hi' ? 'टमाटर के पत्ते की साफ फोटो अपलोड करें और बीमारी की शुरुआती जानकारी पाएं।' : 'Upload a clear photo of a tomato leaf. The model will screen it for common diseases and return practical next steps.';
+            document.getElementById('uploadTitle').textContent = lang === 'hi' ? 'पत्ते की फोटो चुनें' : 'Choose a leaf photo';
+            submitButton.textContent = lang === 'hi' ? 'रोग जांचें' : 'Analyze leaf';
+        }
+    </script>
+</body>
+</html>
