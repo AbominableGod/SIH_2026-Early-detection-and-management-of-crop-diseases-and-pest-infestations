@@ -34,7 +34,8 @@ def find_source_directories(dataset_dir):
             label = normalized(path.name.replace("tomato", ""))
             for expected_key, class_name in expected.items():
                 if label == expected_key or expected_key in label:
-                    found[class_name] = path
+                    if class_name not in found or path.parent.name.lower() == "train":
+                        found[class_name] = path
                     break
     missing = [name for name in CLASS_NAMES if name not in found]
     if missing:

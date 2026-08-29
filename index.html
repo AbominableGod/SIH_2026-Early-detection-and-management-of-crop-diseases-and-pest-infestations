@@ -3,134 +3,596 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crop Doctor AI | Tomato Health Check</title>
+    <title>Crop Doctor AI - SIH 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-        :root { --ink:#17352b; --muted:#63756c; --leaf:#1f7a52; --mint:#dff1e5; --cream:#f7f5ed; --paper:#fffdf8; --line:#d9e4da; --coral:#c6543d; }
-        * { box-sizing:border-box; }
-        body { margin:0; min-height:100vh; color:var(--ink); background:var(--cream); font-family:'DM Sans',sans-serif; }
-        body:before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.28; background-image:radial-gradient(#b7cdbb 1px, transparent 1px); background-size:24px 24px; }
-        .shell { position:relative; max-width:1080px; margin:auto; padding:28px 24px 48px; }
-        header { display:flex; align-items:center; justify-content:space-between; margin-bottom:54px; }
-        .brand { display:flex; align-items:center; gap:11px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; }
-        .brand-mark { display:grid; place-items:center; width:38px; height:38px; border-radius:12px; color:white; background:var(--leaf); font-size:21px; }
-        .lang { border:1px solid var(--line); border-radius:8px; padding:9px 13px; color:var(--ink); background:var(--paper); font:600 13px 'DM Sans',sans-serif; cursor:pointer; }
-        .lang:hover { border-color:var(--leaf); }
-        main { display:grid; grid-template-columns:1fr 1.15fr; gap:58px; align-items:start; }
-        .intro { padding-top:20px; animation:rise .5s ease both; }
-        .eyebrow { margin:0 0 15px; color:var(--leaf); font-size:12px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; }
-        h1 { max-width:510px; margin:0; font:700 clamp(40px,6vw,70px)/.98 'Space Grotesk',sans-serif; letter-spacing:-1px; }
-        .intro-copy { max-width:430px; margin:22px 0 0; color:var(--muted); font-size:17px; line-height:1.6; }
-        .note { display:flex; gap:10px; align-items:center; margin-top:35px; color:var(--muted); font-size:13px; }
-        .note strong { color:var(--ink); }
-        .dot { width:8px; height:8px; border-radius:50%; background:#e29a45; }
-        .panel { padding:24px; border:1px solid var(--line); border-radius:18px; background:rgba(255,253,248,.88); box-shadow:0 18px 55px rgba(34,71,51,.1); animation:rise .6s .08s ease both; }
-        .panel-title { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
-        .panel-title h2 { margin:0; font:600 20px 'Space Grotesk',sans-serif; }
-        .step { color:var(--muted); font-size:12px; }
-        .upload-box { display:block; min-height:240px; padding:24px; border:1.5px dashed #9dbca4; border-radius:13px; background:var(--mint); text-align:center; cursor:pointer; transition:.2s; }
-        .upload-box:hover, .upload-box:focus-within { border-color:var(--leaf); background:#d5ebdc; }
-        .upload-icon { display:grid; place-items:center; width:52px; height:52px; margin:27px auto 15px; border-radius:16px; color:white; background:var(--leaf); font-size:25px; }
-        .upload-box strong { display:block; font-size:16px; }
-        .upload-box small { display:block; margin-top:7px; color:var(--muted); }
-        input[type=file] { position:absolute; width:1px; height:1px; opacity:0; }
-        #imagePreview { display:none; width:100%; max-height:245px; object-fit:cover; margin-top:14px; border-radius:11px; }
-        .file-name { display:none; margin:12px 0 0; color:var(--leaf); font-size:13px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-        .btn { width:100%; margin-top:16px; padding:15px 18px; border:0; border-radius:9px; color:white; background:var(--ink); font:700 15px 'DM Sans',sans-serif; cursor:pointer; transition:.2s; }
-        .btn:hover { background:var(--leaf); transform:translateY(-1px); }
-        .btn:disabled { opacity:.65; cursor:wait; transform:none; }
-        #result { display:none; margin-top:18px; padding:20px; border-radius:12px; border-left:4px solid var(--leaf); background:#edf7ef; animation:rise .35s ease both; }
-        #result.disease { border-color:var(--coral); background:#fff0eb; }
-        .result-label { margin:0 0 8px; color:var(--muted); font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
-        .result-name { margin:0 0 14px; font:600 24px 'Space Grotesk',sans-serif; }
-        .result-row { margin:10px 0 0; color:#3c5549; font-size:14px; line-height:1.5; }
-        .result-row b { color:var(--ink); }
-        .confidence { float:right; color:var(--leaf); font-size:13px; font-weight:700; }
-        .error { color:var(--coral); }
-        @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
-        @media (max-width:760px) { .shell { padding:20px 16px 34px; } header { margin-bottom:30px; } main { grid-template-columns:1fr; gap:28px; } .intro { padding-top:0; } h1 { font-size:46px; } .intro-copy { font-size:15px; } .note { margin-top:22px; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #065f46;
+            --bg-light: #f0fdf4;
+            --bg-dark: #0f172a;
+            --text-light: #1f2937;
+            --text-dark: #e5e7eb;
+            --border-light: #d1d5db;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: background 0.3s, color 0.3s;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body.dark-mode {
+            --bg-light: var(--bg-dark);
+            --text-light: var(--text-dark);
+            --border-light: #374151;
+        }
+
+        body.dark-mode .container {
+            background: #1f2937;
+            border-color: #374151;
+        }
+
+        body.dark-mode input, body.dark-mode button {
+            background: #374151;
+            color: var(--text-dark);
+            border-color: #4b5563;
+        }
+
+        body.dark-mode #result {
+            background: #1f2937;
+            border-color: #374151;
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s;
+        }
+
+        h1 {
+            color: var(--secondary);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        body.dark-mode .subtitle {
+            color: #9ca3af;
+        }
+
+        .upload-section {
+            margin: 30px 0;
+        }
+
+        .upload-box {
+            border: 2px dashed var(--primary);
+            padding: 40px 20px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02));
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .upload-box:hover {
+            border-color: var(--primary-dark);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .upload-text {
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .upload-hint {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        #preview {
+            max-width: 100%;
+            max-height: 400px;
+            margin: 20px auto;
+            border-radius: 15px;
+            display: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 25px 0;
+        }
+
+        button {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            border-left: 6px solid var(--primary);
+            background: #d1fae5;
+            transition: all 0.3s;
+        }
+
+        #result.disease {
+            border-left-color: var(--warning);
+            background: #fef3c7;
+        }
+
+        #result.healthy {
+            border-left-color: var(--success);
+            background: #d1fae5;
+        }
+
+        body.dark-mode #result {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        body.dark-mode #result.disease {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .disease-icon {
+            font-size: 40px;
+        }
+
+        .result-title {
+            flex: 1;
+        }
+
+        .result-title h2 {
+            margin: 0;
+            color: var(--secondary);
+            font-size: 24px;
+        }
+
+        .confidence {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .result-section {
+            margin: 20px 0;
+        }
+
+        .result-section h4 {
+            color: var(--secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+
+        .result-section p {
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .result-section p {
+            color: var(--text-dark);
+        }
+
+        .error-message {
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #dc2626;
+        }
+
+        body.dark-mode .error-message {
+            background: rgba(220, 38, 38, 0.1);
+            color: #fca5a5;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .result-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="shell">
+    <div class="wrapper">
         <header>
-            <div class="brand"><span class="brand-mark">+</span><span>Crop Doctor AI</span></div>
-            <button class="lang" type="button" onclick="toggleLang()">Hindi / English</button>
+            <div class="logo">🍅 <span>Crop Doctor AI</span></div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <select id="langSelect" onchange="changeLanguage()" style="padding: 8px 12px; border-radius: 8px; border: 1px solid #10b981; font-weight: 600; font-family: 'Poppins'; cursor: pointer;">
+                    <option value="en">English</option>
+                    <option value="hi">हिंदी</option>
+                    <option value="mr">मराठी</option>
+                </select>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </div>
         </header>
-        <main>
-            <section class="intro">
-                <p class="eyebrow">Tomato health check</p>
-                <h1>See what your leaf is telling you.</h1>
-                <p class="intro-copy">Upload a clear photo of a tomato leaf. The model will screen it for common diseases and return practical next steps.</p>
-                <div class="note"><span class="dot"></span><span><strong>Private by design.</strong> Images are analyzed for this check only.</span></div>
-            </section>
-            <section class="panel">
-                <div class="panel-title"><h2>Start a diagnosis</h2><span class="step">01 / Upload</span></div>
-                <form id="uploadForm">
-                    <label for="fileInput" class="upload-box">
-                        <span class="upload-icon">↑</span>
-                        <strong id="uploadTitle">Choose a leaf photo</strong>
-                        <small id="uploadHint">JPG or PNG · clear, well-lit images work best</small>
-                    </label>
-                    <input type="file" id="fileInput" name="file" accept="image/jpeg,image/png,image/webp" required>
-                    <p class="file-name" id="fileName"></p>
-                    <img id="imagePreview" alt="Selected tomato leaf preview">
-                    <button type="submit" class="btn" id="submitButton">Analyze leaf</button>
-                </form>
-                <div id="result" aria-live="polite"></div>
-            </section>
-        </main>
-    </div>
-    <script>
-        const form = document.getElementById('uploadForm');
-        const fileInput = document.getElementById('fileInput');
-        const resultDiv = document.getElementById('result');
-        const submitButton = document.getElementById('submitButton');
-        const fileName = document.getElementById('fileName');
-        const preview = document.getElementById('imagePreview');
-        let lang = 'en';
 
-        fileInput.addEventListener('change', () => {
-            const file = fileInput.files[0];
+        <div class="container">
+            <h1 id="mainTitle">🌱 Tomato Health Diagnosis</h1>
+            <p class="subtitle" id="mainSubtitle">Upload a clear photo of a tomato leaf to detect disease and get treatment advice</p>
+
+            <div class="upload-section">
+                <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+                    <span class="upload-icon">📸</span>
+                    <div class="upload-text" id="uploadText">Click to upload or drag & drop</div>
+                    <div class="upload-hint" id="uploadHint">JPG, PNG or WebP (Max 10MB)</div>
+                </div>
+                <input type="file" id="fileInput" accept="image/*">
+                <img id="preview" alt="Preview">
+            </div>
+
+            <div class="button-group">
+                <button onclick="uploadFile()">
+                    <span id="btnText">🔍 Analyze Leaf</span>
+                </button>
+            </div>
+
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                mainTitle: "🌱 Tomato Health Diagnosis",
+                mainSubtitle: "Upload a clear photo of a tomato leaf to detect disease and get treatment advice",
+                uploadText: "Click to upload or drag & drop",
+                uploadHint: "JPG, PNG or WebP (Max 10MB)",
+                btnText: "🔍 Analyze Leaf",
+                analyzing: "Analyzing...",
+                treatment: "💊 Treatment",
+                prevention: "🛡️ Prevention",
+                confidence: "Confidence:",
+                selectFile: "Please select a file first!"
+            },
+            hi: {
+                mainTitle: "🌱 टमाटर स्वास्थ्य निदान",
+                mainSubtitle: "रोग का पता लगाने के लिए टमाटर के पत्ते की स्पष्ट तस्वीर अपलोड करें",
+                uploadText: "अपलोड करने के लिए क्लिक करें या खींचें",
+                uploadHint: "JPG, PNG या WebP (अधिकतम 10MB)",
+                btnText: "🔍 विश्लेषण करें",
+                analyzing: "विश्लेषण हो रहा है...",
+                treatment: "💊 उपचार",
+                prevention: "🛡️ रोकथाम",
+                confidence: "विश्वास:",
+                selectFile: "पहले एक फाइल चुनें!"
+            },
+            mr: {
+                mainTitle: "🌱 टोमॅटो आरोग्य निदान",
+                mainSubtitle: "रोग शोधण्यासाठी टोमॅटोच्या पानाची स्पष्ट तस्वीर अपलोड करा",
+                uploadText: "अपलोड करण्यासाठी क्लिक करा किंवा ड्रॅग करा",
+                uploadHint: "JPG, PNG किंवा WebP (कमाल 10MB)",
+                btnText: "🔍 विश्लेषण करा",
+                analyzing: "विश्लेषण करत आहे...",
+                treatment: "💊 उपचार",
+                prevention: "🛡️ प्रतिबंध",
+                confidence: "आत्मविश्वास:",
+                selectFile: "प्रथम फाइल निवडा!"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function changeLanguage() {
+            currentLang = document.getElementById('langSelect').value;
+            updateUIText();
+        }
+
+        function updateUIText() {
+            const t = translations[currentLang];
+            document.getElementById('mainTitle').innerText = t.mainTitle;
+            document.getElementById('mainSubtitle').innerText = t.mainSubtitle;
+            document.getElementById('uploadText').innerText = t.uploadText;
+            document.getElementById('uploadHint').innerText = t.uploadHint;
+            document.getElementById('btnText').innerText = t.btnText;
+        }
+
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const resultDiv = document.getElementById('result');
+
+        // Theme toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const icon = document.getElementById('themeIcon');
+            icon.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+
+        // Load theme from localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            updateThemeIcon();
+        }
+
+        // File input handling
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
             if (!file) return;
-            fileName.textContent = file.name;
-            fileName.style.display = 'block';
-            preview.src = URL.createObjectURL(file);
-            preview.style.display = 'block';
-            resultDiv.style.display = 'none';
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                preview.src = event.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
         });
 
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const file = fileInput.files[0];
-            if (!file) return;
-            submitButton.disabled = true;
-            submitButton.textContent = 'Analyzing...';
-            resultDiv.className = '';
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<p class="result-row">Reading the leaf image...</p>';
-            try {
-                const response = await fetch('/predict', { method: 'POST', body: new FormData(form) });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.detail || 'The server could not analyze this image.');
-                const healthy = data.predicted_disease === 'Healthy';
-                resultDiv.className = healthy ? '' : 'disease';
-                resultDiv.innerHTML = `<p class="result-label">Screening result <span class="confidence">${data.confidence}</span></p><h3 class="result-name">${data.predicted_disease}</h3><p class="result-row"><b>Treatment:</b> ${data.treatment}</p><p class="result-row"><b>Organic option:</b> ${data.organic_solution}</p>`;
-            } catch (error) {
-                resultDiv.className = 'disease';
-                resultDiv.innerHTML = `<p class="result-row error"><b>Unable to analyze.</b> ${error.message}</p>`;
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = lang === 'hi' ? 'रोग जांचें' : 'Analyze leaf';
+        // Drag & drop
+        const uploadBox = document.querySelector('.upload-box');
+        uploadBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadBox.style.borderColor = 'var(--primary-dark)';
+            uploadBox.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.08))';
+        });
+
+        uploadBox.addEventListener('dragleave', () => {
+            uploadBox.style.borderColor = 'var(--primary)';
+            uploadBox.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02))';
+        });
+
+        uploadBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadBox.style.borderColor = 'var(--primary)';
+            uploadBox.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02))';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                const changeEvent = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(changeEvent);
             }
         });
 
-        function toggleLang() {
-            lang = lang === 'en' ? 'hi' : 'en';
-            document.querySelector('h1').textContent = lang === 'hi' ? 'आपका पत्ता क्या कहता है?' : 'See what your leaf is telling you.';
-            document.querySelector('.intro-copy').textContent = lang === 'hi' ? 'टमाटर के पत्ते की साफ फोटो अपलोड करें और बीमारी की शुरुआती जानकारी पाएं।' : 'Upload a clear photo of a tomato leaf. The model will screen it for common diseases and return practical next steps.';
-            document.getElementById('uploadTitle').textContent = lang === 'hi' ? 'पत्ते की फोटो चुनें' : 'Choose a leaf photo';
-            submitButton.textContent = lang === 'hi' ? 'रोग जांचें' : 'Analyze leaf';
+        async function uploadFile() {
+            const file = fileInput.files[0];
+            const t = translations[currentLang];
+            if (!file) {
+                showError(t.selectFile);
+                return;
+            }
+
+            const button = event.target.closest('button');
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner"></span> ' + t.analyzing;
+
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch('/predict?lang=' + currentLang, { method: 'POST', body: formData });
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showError(data.detail || 'Failed to analyze image');
+                } else {
+                    displayResult(data);
+                }
+            } catch (error) {
+                showError('Error: ' + error.message);
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<span>' + t.btnText + '</span>';
+            }
+        }
+
+        function displayResult(data) {
+            const t = translations[currentLang];
+            const isHealthy = data.predicted_disease === 'Healthy';
+            const diseaseIcon = isHealthy ? '✅' : '⚠️';
+            const resultClass = isHealthy ? 'healthy' : 'disease';
+
+            resultDiv.className = resultClass;
+            resultDiv.innerHTML = `
+                <div class="result-header">
+                    <div class="disease-icon">${diseaseIcon}</div>
+                    <div class="result-title">
+                        <h2>${data.disease_name}</h2>
+                        <span class="confidence">${t.confidence} ${data.confidence}%</span>
+                    </div>
+                </div>
+                <hr style="border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 15px 0;">
+                <div class="result-section">
+                    <h4>${t.treatment}</h4>
+                    <p>${data.treatment}</p>
+                </div>
+                <div class="result-section">
+                    <h4>${t.prevention}</h4>
+                    <p>${data.prevention}</p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        function showError(message) {
+            resultDiv.className = '';
+            resultDiv.innerHTML = `<div class="error-message">❌ ${message}</div>`;
+            resultDiv.style.display = 'block';
         }
     </script>
 </body>

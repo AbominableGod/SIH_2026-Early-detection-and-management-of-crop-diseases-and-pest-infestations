@@ -16,7 +16,7 @@ Train the model. This downloads the Kaggle dataset automatically and creates `to
 python train_model.py
 ```
 
-Start the API:
+Start the API from the project directory:
 
 ```bash
 uvicorn app:app --reload
@@ -24,4 +24,4 @@ uvicorn app:app --reload
 
 Open http://localhost:8000 and upload a leaf image. API documentation is available at http://localhost:8000/docs.
 
-The current workspace already contains `tomato_model.h5`, so training is only needed when retraining the model.
+Training creates `tomato_model.h5` in the project directory. The API loads that file when the first image is analyzed; if it is missing, run the training command first.
