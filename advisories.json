@@ -1,42 +1,12 @@
 {
-  "Bacterial spot": {
-    "treatment": "Use copper-based bactericides like Copper Oxychloride 0.25%. Remove infected leaves immediately.",
-    "prevention": "Avoid overhead watering. Use disease-free seeds. 3-year crop rotation."
-  },
-  "Early blight": {
-    "treatment": "Spray Mancozeb 0.2% or Chlorothalonil 0.2% every 10 days. Remove lower infected leaves.",
-    "prevention": "Mulching to prevent soil splash. Ensure good air circulation between plants."
-  },
-  "Late blight": {
-    "treatment": "Spray Metalaxyl + Mancozeb 0.25% immediately. Destroy severely infected plants.",
-    "prevention": "Avoid wet conditions. Spray preventive fungicide before monsoon season."
-  },
-  "Leaf Mold": {
-    "treatment": "Spray Chlorothalonil 0.2% or Copper fungicide. Reduce humidity in greenhouse.",
-    "prevention": "Improve ventilation. Avoid working in crop when leaves are wet."
-  },
-  "Septoria leaf spot": {
-    "treatment": "Spray Mancozeb 0.2% or Azoxystrobin 0.1% every 7-10 days.",
-    "prevention": "Remove plant debris. Drip irrigation instead of sprinklers."
-  },
-  "Spider mites": {
-    "treatment": "Spray Neem oil 5ml/L or Abamectin 0.5ml/L. Wash leaves with water jet.",
-    "prevention": "Maintain humidity >60%. Introduce predatory mites."
-  },
-  "Target Spot": {
-    "treatment": "Spray Chlorothalonil 0.2% or Tebuconazole 0.1%. Remove infected plant parts.",
-    "prevention": "Avoid dense planting. Control weeds around field."
-  },
-  "Yellow Leaf Curl Virus": {
-    "treatment": "No cure. Uproot and destroy infected plants immediately.",
-    "prevention": "Control whiteflies using Yellow sticky traps + Imidacloprid 0.3ml/L spray."
-  },
-  "Mosaic virus": {
-    "treatment": "No cure. Remove infected plants. Control aphids with insecticidal soap.",
-    "prevention": "Use virus-free seeds. Disinfect tools. Control aphid vectors."
-  },
-  "Healthy": {
-    "treatment": "Plant is healthy. Continue current care routine.",
-    "prevention": "Regular scouting. Balanced fertilization. Maintain field hygiene."
-  }
+  "Bacterial spot": {"treatment": "Use copper-based bactericides like Copper Oxychloride 0.25%. Remove infected leaves immediately.", "prevention": "Avoid overhead watering. Use disease-free seeds. 3-year crop rotation."},
+  "Early blight": {"treatment": "Spray Mancozeb 0.2% or Chlorothalonil 0.2% every 10 days. Remove lower infected leaves.", "prevention": "Mulching to prevent soil splash. Ensure good air circulation between plants."},
+  "Late blight": {"treatment": "Spray Metalaxyl + Mancozeb 0.25% immediately. Destroy severely infected plants.", "prevention": "Avoid wet conditions. Spray preventive fungicide before monsoon season."},
+  "Leaf Mold": {"treatment": "Spray Chlorothalonil 0.2% or Copper fungicide. Reduce humidity in greenhouse.", "prevention": "Improve ventilation. Avoid working in crop when leaves are wet."},
+  "Septoria leaf spot": {"treatment": "Spray Mancozeb 0.2% or Azoxystrobin 0.1% every 7-10 days.", "prevention": "Remove plant debris. Drip irrigation instead of sprinklers."},
+  "Spider mites": {"treatment": "Spray Neem oil 5ml/L or Abamectin 0.5ml/L. Wash leaves with water jet.", "prevention": "Maintain humidity >60%. Introduce predatory mites."},
+  "Target Spot": {"treatment": "Spray Chlorothalonil 0.2% or Tebuconazole 0.1%. Remove infected plant parts.", "prevention": "Avoid dense planting. Control weeds around field."},
+  "Yellow Leaf Curl Virus": {"treatment": "No cure. Uproot and destroy infected plants immediately.", "prevention": "Control whiteflies using Yellow sticky traps + Imidacloprid 0.3ml/L spray."},
+  "Mosaic virus": {"treatment": "No cure. Remove infected plants. Control aphids with insecticidal soap.", "prevention": "Use virus-free seeds. Disinfect tools. Control aphid vectors."},
+  "Healthy": {"treatment": "Plant is healthy. Continue current care routine.", "prevention": "Regular scouting. Balanced fertilization. Maintain field hygiene."}
 }

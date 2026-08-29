@@ -545,14 +545,22 @@
                 const formData = new FormData();
                 formData.append('file', file);
 
-                const response = await fetch('/predict?lang=' + currentLang, { method: 'POST', body: formData });
-                const data = await response.json();
+              const response = await fetch('/predict?lang=' + currentLang, { method: 'POST', body: formData });
 
-                if (!response.ok) {
-                    showError(data.detail || 'Failed to analyze image');
-                } else {
-                    displayResult(data);
-                }
+// FIXED: Check status FIRST before parsing JSON
+let data;
+try {
+    data = await response.json();
+} catch (e) {
+    data = { detail: 'Server returned invalid response' };
+}
+
+if (!response.ok) {
+    showError(data.detail || 'Failed to analyze image');
+    return; // ADD THIS RETURN
+} else {
+    displayResult(data);
+}
             } catch (error) {
                 showError('Error: ' + error.message);
             } finally {
@@ -563,7 +571,7 @@
 
         function displayResult(data) {
             const t = translations[currentLang];
-            const isHealthy = data.predicted_disease === 'Healthy';
+            const isHealthy = data.disease_key === 'Tomato___healthy';
             const diseaseIcon = isHealthy ? '✅' : '⚠️';
             const resultClass = isHealthy ? 'healthy' : 'disease';
 
