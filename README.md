@@ -1,27 +1,31 @@
-# Tomato Leaf Disease Detection
+markdown# 🌱 SIH 2026: Early Detection and Management of Crop Diseases
 
-FastAPI and TensorFlow MobileNetV2 application for classifying ten tomato leaf conditions.
+AI-powered Crop Disease Detection system for Tomato plants using Deep Learning + FastAPI + Multi-language Support.
 
-## Run
+## 🚀 Features
+- **AI Model**: TensorFlow CNN for Tomato Leaf Disease Classification
+- **10 Classes**: Detects 9 diseases + Healthy 
+  `Bacterial spot, Early blight, Late blight, Leaf Mold, Septoria, Spider mites, Target Spot, YLCV, Mosaic, Healthy`
+- **Multi-language**: English, Hindi, Marathi support
+- **Treatment & Prevention**: Instant advisory from database
+- **Dark/Light Mode**: Farmer-friendly UI
+- **FastAPI Backend**: 1 API call = Prediction in <2 seconds
 
-Install dependencies:
+## 🛠️ Tech Stack
+`Python` `TensorFlow 2.21` `FastAPI` `Uvicorn` `Pillow` `HTML/CSS/JS`
 
-```bash
-pip install -r requirements.txt
-```
-
-Train the model. This downloads the Kaggle dataset automatically and creates `tomato_model.h5`:
-
-```bash
-python train_model.py
-```
-
-Start the API from the project directory:
-
-```bash
-uvicorn app:app --reload
-```
-
-Open http://localhost:8000 and upload a leaf image. API documentation is available at http://localhost:8000/docs.
-
-Training creates `tomato_model.h5` in the project directory. The API loads that file when the first image is analyzed; if it is missing, run the training command first.
+## 📂 Project StructureSIH_2026-Early-detection-and-management-of-crop-diseases/
+├── app.py                 # FastAPI backend
+├── index.html             # Frontend UI
+├── model/
+│   └── crop_disease_model.h5  # Pre-trained TF model
+├── advisories.json        # Treatment + Prevention data
+├── requirements.txt       # Dependencies
+└── README.mdjavascript
+## ⚡ How to Run
+1.  **Install dependencies**
+    ```bash
+    pip install -r requirements.txtStart Serverbash    uvicorn app:app --reloadOpen in Browserjavascript    http://localhost:8000Upload a tomato leaf image and get instant disease detection + treatment in your language.
+API documentation: http://localhost:8000/docs
+📡 API EndpointsMethodEndpointDescriptionGET/healthCheck server + model statusPOST/predict?lang=hiUpload image + get disease + advisoryGET/Frontend UI👨‍💻 Team
+SIH 2026 - Problem Statement: Early detection and management of crop diseases and pest infestations
